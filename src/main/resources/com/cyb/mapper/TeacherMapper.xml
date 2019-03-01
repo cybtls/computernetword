@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.TeacherMapper">
+    <select id="teacherlogin" resultType="com.cyb.pojo.Teacher">
+        select * from t_teacher
+        <where>
+            <if test="teacheraccount != null and teacheraccount !=''">
+                and teacher_account = #{teacheraccount}
+            </if>
+            <if test="teacherpassword != null and teacherpassword !=''">
+                and teacher_password = #{teacherpassword}
+            </if>
+        </where>
+    </select>
+</mapper>

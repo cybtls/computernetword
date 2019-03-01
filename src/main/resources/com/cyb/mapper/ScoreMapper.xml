@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.ScoreMapper">
+    <!--封装成绩表-->
+    <resultMap id="score" type="com.cyb.pojo.Score">
+        <id property="scoreId" column="score_id"></id>
+        <result property="courseScore" column="course_score"></result>
+        <association property="student" javaType="com.cyb.pojo.Student">
+            <result property="stuName" column="stu_name"></result>
+            <association property="stuClass" javaType="com.cyb.pojo.Class">
+                <result property="className" column="class_name"></result>
+            </association>
+        </association>
+        <association property="course" javaType="com.cyb.pojo.Course">
+            <result property="courseName" column="course_name"></result>
+        </association>
+    </resultMap>
+
+    <!--查询成绩-->
+    <select id="getmyscore" resultMap="score">
+        SELECT class.class_name,course.course_name,stu.stu_id,stu.stu_name,score.course_score
+        from t_class class ,t_score score,t_student stu,t_course course
+        where  class.class_id = stu.stu_classid
+        and course.course_id = score.course_id
+        and score.stu_id = stu.stu_id
+        and stu.stu_id = #{stuId}
+    </select>
+
+    <!--获取成绩数目-->
+    <select id="getcount" resultType="java.lang.Integer">
+        select count(*) from t_score t1,t_course t2
+        <where>
+            <if test="stuId !=null ">
+                and t1.stu_id = #{stuId}
+            </if>
+            <if test="coursename !=null and coursename != ''">
+                and t2.course_name like  CONCAT(CONCAT('%',#{coursename}),'%')
+            </if>
+        </where>
+        and t1.course_id = t2.course_id
+    </select>
+
+    <select id="getmyscorebyname" resultMap="score">
+        SELECT class.class_name,course.course_name,stu.stu_id,stu.stu_name,score.course_score
+        from t_class class ,t_score score,t_student stu,t_course course
+        where  class.class_id = stu.stu_classid
+        and course.course_id = score.course_id
+        and score.stu_id = stu.stu_id
+        and stu.stu_id = #{stuId}
+        and course.course_name like  CONCAT(CONCAT('%',#{coursename}),'%')
+    </select>
+</mapper>

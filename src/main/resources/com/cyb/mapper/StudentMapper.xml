@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.StudentMapper">
+
+    <resultMap id="stu" type="com.cyb.pojo.Student">
+        <id property="stuId" column="stu_id"></id>
+        <result property="stuAccount" column="stu_account"></result>
+        <result property="stuPassword" column="stu_password"></result>
+        <result property="stuName" column="stu_name"></result>
+        <result property="stuQuestion" column="stu_question"></result>
+        <result property="stuAnswer" column="stu_answer"></result>
+        <result property="stuStatus" column="stu_status"></result>
+        <result property="stuClassid" column="stu_classid"></result>
+        <association property="stuClass" javaType="com.cyb.pojo.Class">
+            <id property="classId" column="class_id"></id>
+            <result property="className" column="class_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="stulogin" resultMap="stu">
+        SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
+        from t_student t1,t_class t2
+        <where>
+            <if test="stuaccount != null ">
+                and t1.stu_account = #{stuaccount}
+            </if>
+            <if test="stupassword != null and stupassword != ''">
+                and t1.stu_password = #{stupassword}
+            </if>
+        </where>
+        and t1.stu_classid = t2.class_id
+    </select>
+</mapper>
