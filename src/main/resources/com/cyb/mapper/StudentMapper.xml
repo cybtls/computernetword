@@ -30,4 +30,20 @@
         </where>
         and t1.stu_classid = t2.class_id
     </select>
+
+    <update id="updatemyinfo" parameterType="com.cyb.pojo.Student">
+        UPDATE t_student
+        <set>
+            <if test="stuPassword != null and stuPassword !=''">
+                stu_password = #{stuPassword},
+            </if>
+            <if test="stuQuestion != null and stuQuestion !=''">
+                stu_question = #{stuQuestion},
+            </if>
+            <if test="stuAnswer != null and stuQuestion !=''">
+                stu_answer = #{stuAnswer},
+            </if>
+        </set>
+        where stu_id = #{stuId}
+    </update>
 </mapper>

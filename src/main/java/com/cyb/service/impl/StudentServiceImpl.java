@@ -20,4 +20,10 @@ public class StudentServiceImpl implements StudentService {
         return stu;
     }
 
+    @Override
+    public Integer updatemyinfo(Student student) {
+        Integer flag = studentMapper.updatemyinfo(student);
+        return  flag;
+    }
+
 }

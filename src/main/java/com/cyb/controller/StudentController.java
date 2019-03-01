@@ -1,6 +1,7 @@
 package com.cyb.controller;
 
 import com.cyb.codemsg.CodeMsg;
+import com.cyb.pojo.Class;
 import com.cyb.pojo.Score;
 import com.cyb.pojo.Student;
 import com.cyb.service.ScoreService;
@@ -84,6 +85,8 @@ public class StudentController {
         return back;
     }
 
+
+    //按课程名查询成绩
     @ResponseBody
     @RequestMapping("/getmyscorebyname")
     public Map<String,Object> getmyscorebyname(@RequestBody Map map){
@@ -108,4 +111,21 @@ public class StudentController {
         return back;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/updatemyinfo")
+    public Map<String,Object> updatemyinfo(@RequestBody Map map){
+        JSONObject jsonobject = JSONObject.fromObject(map.get("stuform").toString());
+        Student student = (Student)JSONObject.toBean(jsonobject,Student.class);
+        Integer flag = studentService.updatemyinfo(student);
+        Map<String,Object> back = new HashMap<>();
+        if (flag <= 0){
+            //更新失败
+            code = CodeMsg.Code_ERROR;
+        }else {
+            code = CodeMsg.Code_SUCCESS;
+        }
+        back.put("code",code);
+        return back;
+    }
 }
