@@ -1,5 +1,6 @@
 package com.cyb.pojo;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Problems {
@@ -12,7 +13,7 @@ public class Problems {
 
     private Integer stuId;
 
-    private Date problemCreatedate;
+    private Timestamp problemCreatedate;
 
     public Integer getProblemId() {
         return problemId;
@@ -46,11 +47,11 @@ public class Problems {
         this.stuId = stuId;
     }
 
-    public Date getProblemCreatedate() {
+    public Timestamp getProblemCreatedate() {
         return problemCreatedate;
     }
 
-    public void setProblemCreatedate(Date problemCreatedate) {
+    public void setProblemCreatedate(Timestamp problemCreatedate) {
         this.problemCreatedate = problemCreatedate;
     }
 }

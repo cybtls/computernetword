@@ -1,13 +1,11 @@
 package com.cyb.controller;
 
 import com.cyb.codemsg.CodeMsg;
-import com.cyb.pojo.Class;
 import com.cyb.pojo.Score;
 import com.cyb.pojo.Student;
 import com.cyb.service.ScoreService;
 import com.cyb.service.StudentService;
 import com.github.pagehelper.PageHelper;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,6 +115,7 @@ public class StudentController {
     public Map<String,Object> updatemyinfo(@RequestBody Map map){
         JSONObject jsonobject = JSONObject.fromObject(map.get("stuform").toString());
         Student student = (Student)JSONObject.toBean(jsonobject,Student.class);
+        System.out.println(student);
         Integer flag = studentService.updatemyinfo(student);
         Map<String,Object> back = new HashMap<>();
         if (flag <= 0){

@@ -1,6 +1,7 @@
 package com.cyb.pojo;
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Teacher {
 
     private Integer teacherStatus;
 
-    private Date teacherCreatedate;
+    private String teacherCreatedate;
 
     public Integer getTeacherId() {
         return teacherId;
@@ -91,11 +92,11 @@ public class Teacher {
         this.teacherStatus = teacherStatus;
     }
 
-    public Date getTeacherCreatedate() {
+    public String getTeacherCreatedate() {
         return teacherCreatedate;
     }
 
-    public void setTeacherCreatedate(Date teacherCreatedate) {
+    public void setTeacherCreatedate(String teacherCreatedate) {
         this.teacherCreatedate = teacherCreatedate;
     }
 }

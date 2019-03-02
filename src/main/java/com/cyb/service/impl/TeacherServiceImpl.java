@@ -19,4 +19,10 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher =  teacherMapper.teacherlogin(teacheraccount,teacherpassword);
         return teacher;
     }
+
+    @Override
+    public Integer updatemyinfo(Teacher teacher) {
+        Integer flag = teacherMapper.updatemyinfo(teacher);
+        return flag;
+    }
 }

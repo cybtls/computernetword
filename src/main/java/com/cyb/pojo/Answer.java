@@ -1,6 +1,6 @@
 package com.cyb.pojo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Answer {
 
@@ -10,7 +10,7 @@ public class Answer {
 
     private String answerText;
 
-    private Date answerCreatedate;
+    private Timestamp answerCreatedate;
 
     public Integer getAnswerId() {
         return answerId;
@@ -36,11 +36,11 @@ public class Answer {
         this.answerText = answerText;
     }
 
-    public Date getAnswerCreatedate() {
+    public Timestamp getAnswerCreatedate() {
         return answerCreatedate;
     }
 
-    public void setAnswerCreatedate(Date answerCreatedate) {
+    public void setAnswerCreatedate(Timestamp answerCreatedate) {
         this.answerCreatedate = answerCreatedate;
     }
 }

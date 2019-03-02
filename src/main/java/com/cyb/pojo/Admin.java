@@ -1,5 +1,6 @@
 package com.cyb.pojo;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class Admin {
 
     private String adminName;
 
-    private Date adminCreatedate;
+    private Timestamp adminCreatedate;
 
     private String adminEmail;
 
@@ -55,11 +56,11 @@ public class Admin {
         this.adminName = adminName;
     }
 
-    public Date getAdminCreatedate() {
+    public Timestamp getAdminCreatedate() {
         return adminCreatedate;
     }
 
-    public void setAdminCreatedate(Date adminCreatedate) {
+    public void setAdminCreatedate(Timestamp adminCreatedate) {
         this.adminCreatedate = adminCreatedate;
     }
 

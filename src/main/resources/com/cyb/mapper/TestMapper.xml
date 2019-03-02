@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.TestMapper">
+    <insert id="add">
+        insert into test set name = "56565";
+    </insert>
+
+    <select id="get" resultType="com.cyb.pojo.Test">
+        select * from test
+    </select>
+</mapper>

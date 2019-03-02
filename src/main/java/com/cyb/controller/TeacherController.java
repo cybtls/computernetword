@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import net.sf.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,4 +49,27 @@ public class TeacherController {
         return back;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/updatemyinfo")
+    public Map<String,Object> updatemyinfo(@RequestBody Map map){
+        System.out.println(map.get("stuform"));
+        JSONObject jsonobject = JSONObject.fromObject(map.get("stuform").toString());
+        Teacher teacher = (Teacher)JSONObject.toBean(jsonobject,Teacher.class);
+//        System.out.println(teacher.getTeacherCreatedate());
+//        System.out.println(teacher.getTeacherId());
+//        System.out.println(new Date());
+        teacher.setTeacherCreatedate("169836800000");
+        Integer flag =  teacherService.updatemyinfo(teacher);
+        if (flag <= 0){
+            //更新失败
+            code = CodeMsg.Code_ERROR;
+            System.out.println("更新失败");
+        }else {
+            code = CodeMsg.Code_SUCCESS;
+        }
+        Map<String,Object> back  = new HashMap<>();
+        back.put("code",code);
+        return back;
+    }
 }
