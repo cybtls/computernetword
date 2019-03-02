@@ -44,7 +44,7 @@
 
     <!--引入数据库相关信息的配置文件-->
     <context:property-placeholder location="classpath:db.properties"/>
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="user" value="${jdbc.username}"/>
@@ -58,6 +58,7 @@
         <property name="checkoutTimeout" value="100000"/>
         <!--获取连接失败重试次数-->
         <property name="acquireRetryAttempts" value="2"/>
+
     </bean>
 
     <!--整合mybatis-->
@@ -99,6 +100,7 @@
         <property name="basePackage" value="com.cyb.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
     </bean>
+
 
     <!--事务管理 使用数据源事务管理类进行管理-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

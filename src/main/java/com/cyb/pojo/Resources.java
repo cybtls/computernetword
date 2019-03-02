@@ -18,9 +18,9 @@ public class Resources {
 
     private Integer resDownnum;
 
-    private String resUploader;
+    private String resLastuploader;
 
-    private Timestamp resCreatedate;
+    private String resLastmodification;
 
     public Integer getResId() {
         return resId;
@@ -62,19 +62,19 @@ public class Resources {
         this.resDownnum = resDownnum;
     }
 
-    public String getResUploader() {
-        return resUploader;
+    public String getResLastuploader() {
+        return resLastuploader;
     }
 
-    public void setResUploader(String resUploader) {
-        this.resUploader = resUploader;
+    public void setResLastuploader(String resLastuploader) {
+        this.resLastuploader = resLastuploader;
     }
 
-    public Timestamp getResCreatedate() {
-        return resCreatedate;
+    public String getResLastmodification() {
+        return resLastmodification;
     }
 
-    public void setResCreatedate(Timestamp resCreatedate) {
-        this.resCreatedate = resCreatedate;
+    public void setResLastmodification(String resLastmodification) {
+        this.resLastmodification = resLastmodification;
     }
 }
