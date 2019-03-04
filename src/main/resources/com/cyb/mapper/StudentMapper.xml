@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.StudentMapper">
 
+    <!--封装学生信息-->
     <resultMap id="stu" type="com.cyb.pojo.Student">
         <id property="stuId" column="stu_id"></id>
         <result property="stuAccount" column="stu_account"></result>
@@ -17,6 +18,7 @@
         </association>
     </resultMap>
 
+    <!--学生登录检查-->
     <select id="stulogin" resultMap="stu">
         SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
         from t_student t1,t_class t2
@@ -31,6 +33,7 @@
         and t1.stu_classid = t2.class_id
     </select>
 
+    <!--学生更新个人信息-->
     <update id="updatemyinfo" parameterType="com.cyb.pojo.Student">
         UPDATE t_student
         <set>
@@ -44,6 +47,35 @@
                 stu_answer = #{stuAnswer},
             </if>
         </set>
-        where stu_id = #{stuId}
+        <where>
+            <if test="stuId != null ">
+                and stu_id = #{stuId}
+            </if>
+        </where>
     </update>
+
+    <!--学生更新状态-->
+    <update id="updatestatus">
+        update t_student
+        <set>
+            <if test="status != null ">
+                stu_status = #{status}
+            </if>
+        </set>
+        <where>
+            <if test="stuid != null ">
+                and stu_id = #{stuid}
+            </if>
+        </where>
+    </update>
+
+    <!--删除学生-->
+    <delete id="delstudent">
+        DELETE FROM t_student
+        <where>
+            <if test="stuid != null ">
+                and stu_id = #{stuid}
+            </if>
+        </where>
+    </delete>
 </mapper>

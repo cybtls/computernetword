@@ -5,4 +5,15 @@
     <select id="queryall" resultType="com.cyb.pojo.Class">
         select * from t_class
     </select>
+
+    <select id="getclassinfobyteacherId" resultType="com.cyb.pojo.Class">
+        SELECT t2.* FROM t_teachertoclass t1, t_class t2
+        <where>
+            <if test="teacherId != null ">
+                and t1.teacher_id = #{teacherId}
+            </if>
+        </where>
+         and t1.class_id  = t2.class_id
+
+    </select>
 </mapper>

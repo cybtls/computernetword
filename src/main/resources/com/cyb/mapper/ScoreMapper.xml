@@ -40,13 +40,20 @@
         and t1.course_id = t2.course_id
     </select>
 
+    <!--通过课程名查询成绩-->
     <select id="getmyscorebyname" resultMap="score">
         SELECT class.class_name,course.course_name,stu.stu_id,stu.stu_name,score.course_score
         from t_class class ,t_score score,t_student stu,t_course course
-        where  class.class_id = stu.stu_classid
+        <where>
+            <if test="stuId != null ">
+                and stu.stu_id = #{stuId}
+            </if>
+            <if test="coursename != null and coursename!= ''">
+                and course.course_name like  CONCAT(CONCAT('%',#{coursename}),'%')
+            </if>
+        </where>
+        and  class.class_id = stu.stu_classid
         and course.course_id = score.course_id
         and score.stu_id = stu.stu_id
-        and stu.stu_id = #{stuId}
-        and course.course_name like  CONCAT(CONCAT('%',#{coursename}),'%')
     </select>
 </mapper>

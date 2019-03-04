@@ -19,4 +19,9 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> queryall() {
         return classMapper.queryall();
     }
+
+    @Override
+    public List<Class> getclassinfobyteacherId(Integer teacherId) {
+        return classMapper.getclassinfobyteacherId(teacherId);
+    }
 }

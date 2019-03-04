@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.TeacherMapper">
+
+    <resultMap id="students" type="com.cyb.pojo.Student">
+        <id property="stuId" column="stu_id"></id>
+        <result property="stuAccount" column="stu_account"></result>
+        <result property="stuName" column="stu_name"></result>
+        <result property="stuStatus" column="stu_status"></result>
+        <association property="stuClass" javaType="com.cyb.pojo.Class">
+            <id property="classId" column="class_id"></id>
+            <result property="className" column="class_name"></result>
+        </association>
+    </resultMap>
+
+
+    <!--更新个人信息-->
     <update id="updatemyinfo" parameterType="com.cyb.pojo.Teacher">
         UPDATE t_teacher
         <set>
@@ -20,9 +34,14 @@
             teacher_answer = #{teacherAnswer},
             </if>
         </set>
-        where teacher_id = #{teacherId}
+        <where>
+            <if test="teacherId !=null ">
+                and teacher_id = #{teacherId}
+            </if>
+        </where>
     </update>
 
+    <!--登录验证-->
     <select id="teacherlogin" resultType="com.cyb.pojo.Teacher">
         select * from t_teacher
         <where>
@@ -33,5 +52,62 @@
                 and teacher_password = #{teacherpassword}
             </if>
         </where>
+    </select>
+
+    <!--通过班级id获取学生信息-->
+    <select id="getmyclassbyid" resultMap="students">
+        SELECT   t_student.*,t_class.*
+        FROM t_class,t_student
+        <where>
+            <if test="classid != null ">
+                and  t_class.class_id = #{classid}
+            </if>
+            <if test="classid != null ">
+                and  t_student.stu_classid = #{classid}
+            </if>
+        </where>
+        group by t_student.stu_id
+    </select>
+
+    <!--通过班级名获取学生信息-->
+    <select id="getmyclassbyname" resultMap="students">
+        SELECT t_student.*,t_class.*
+        FROM t_student,t_class,t_teachertoclass
+        <where>
+            <if test="teacherid != null ">
+                and t_teachertoclass.teacher_id = #{teacherid}
+            </if>
+            <if test="classname != null and classname != ''">
+                and t_class.class_name LIKE  CONCAT(CONCAT('%',#{classname}),'%')
+            </if>
+        </where>
+        and t_class.class_id = t_student.stu_classid
+        and t_class.class_id = t_teachertoclass.class_id
+        group by t_student.stu_id
+    </select>
+
+    <!--通过班级id获取班级学生数量-->
+    <select id="getcountbyid" resultType="java.lang.Integer">
+        select  count(*) from  t_student
+        <where>
+            <if test="classid != null ">
+                and stu_classid = #{classid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getcountbyname" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM t_student,t_class,t_teachertoclass
+        <where>
+            <if test="teacherid != null ">
+                and t_teachertoclass.teacher_id = #{teacherid}
+            </if>
+            <if test="classname != null and classname != ''">
+                and t_class.class_name LIKE  CONCAT(CONCAT('%',#{classname}),'%')
+            </if>
+        </where>
+        and t_class.class_id = t_student.stu_classid
+        and t_class.class_id = t_teachertoclass.class_id
     </select>
 </mapper>

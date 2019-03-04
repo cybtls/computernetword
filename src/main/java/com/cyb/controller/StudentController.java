@@ -28,7 +28,12 @@ public class StudentController {
     @Autowired
     private ScoreService scoreService;
 
+//    状态码
     Integer code;
+
+//    设置每页数量
+    private Integer pageSize = 11;
+
 
 //    学生登录
     @ResponseBody
@@ -56,9 +61,6 @@ public class StudentController {
         return back;
     }
 
-    //设置每页数量
-    private Integer pageSize = 13;
-
 
 //    查询成绩
     @ResponseBody
@@ -84,7 +86,7 @@ public class StudentController {
     }
 
 
-    //按课程名查询成绩
+//    按课程名查询成绩
     @ResponseBody
     @RequestMapping("/getmyscorebyname")
     public Map<String,Object> getmyscorebyname(@RequestBody Map map){
@@ -109,13 +111,12 @@ public class StudentController {
         return back;
     }
 
-
+//    更新个人信息
     @ResponseBody
     @RequestMapping("/updatemyinfo")
     public Map<String,Object> updatemyinfo(@RequestBody Map map){
         JSONObject jsonobject = JSONObject.fromObject(map.get("stuform").toString());
         Student student = (Student)JSONObject.toBean(jsonobject,Student.class);
-        System.out.println(student);
         Integer flag = studentService.updatemyinfo(student);
         Map<String,Object> back = new HashMap<>();
         if (flag <= 0){

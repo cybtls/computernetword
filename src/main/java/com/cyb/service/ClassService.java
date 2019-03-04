@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ClassService {
     List<Class> queryall();
+
+    List<Class> getclassinfobyteacherId(Integer teacherId);
 }

@@ -26,4 +26,16 @@ public class StudentServiceImpl implements StudentService {
         return  flag;
     }
 
+    @Override
+    public Integer updatestatus(Integer stuid, Integer status) {
+        Integer flag = studentMapper.updatestatus(stuid,status);
+        return  flag;
+    }
+
+    @Override
+    public Integer delstudent(Integer stuid) {
+        Integer flag = studentMapper.delstudent(stuid);
+        return  flag;
+    }
+
 }
