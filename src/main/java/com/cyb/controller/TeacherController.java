@@ -9,11 +9,13 @@ import com.cyb.service.ClassService;
 import com.cyb.service.StudentService;
 import com.cyb.service.TeacherService;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import net.sf.json.JSONObject;
 
@@ -42,9 +44,9 @@ public class TeacherController {
 //    教师登录检查
     @ResponseBody
     @RequestMapping("/teacherlogin")
-    public Map<String,Object> teacherlogin(@RequestBody Map map){
-        String teacheraccount = (String) map.get("teacheraccount");
-        String teacherpassword = (String) map.get("teacherpassword");
+    public Map<String,Object> teacherlogin(@RequestParam("teacheraccount")String teacheraccount, @RequestParam("teacherpassword")String teacherpassword){
+//        String teacheraccount = (String) map.get("teacheraccount");
+//        String teacherpassword = (String) map.get("teacherpassword");
         Teacher teacher = teacherService.teacherlogin(teacheraccount,teacherpassword);
         Map<String,Object> back  = new HashMap<>();
         if (teacher == null){

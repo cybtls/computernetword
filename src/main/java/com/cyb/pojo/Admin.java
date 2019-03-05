@@ -17,7 +17,7 @@ public class Admin {
 
     private String adminName;
 
-    private Timestamp adminCreatedate;
+    private String adminCreatedate;
 
     private String adminEmail;
 
@@ -56,11 +56,11 @@ public class Admin {
         this.adminName = adminName;
     }
 
-    public Timestamp getAdminCreatedate() {
+    public String getAdminCreatedate() {
         return adminCreatedate;
     }
 
-    public void setAdminCreatedate(Timestamp adminCreatedate) {
+    public void setAdminCreatedate(String adminCreatedate) {
         this.adminCreatedate = adminCreatedate;
     }
 

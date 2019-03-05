@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -38,9 +39,9 @@ public class StudentController {
 //    学生登录
     @ResponseBody
     @RequestMapping("/stulogin")
-    public Map<String,Object> stulogin(@RequestBody Map map){
-        Integer stuaccount = (Integer) map.get("stuaccount");
-        String stupassword = (String) map.get("stupassword");
+    public Map<String,Object> stulogin(@RequestParam("stuaccount")Integer stuaccount, @RequestParam("stupassword")String stupassword){
+//        Integer stuaccount = (Integer) map.get("stuaccount");
+//        String stupassword = (String) map.get("stupassword");
         Student stu =  studentService.stulogin(stuaccount,stupassword);
         Map<String,Object> back  = new HashMap<>();
         if (stu == null){
