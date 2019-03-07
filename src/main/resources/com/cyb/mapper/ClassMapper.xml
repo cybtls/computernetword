@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.ClassMapper">
+    <insert id="addclass">
+        insert into t_class
+        <set>
+            <if test="classname != null and classname !=''">
+                class_name = #{classname},
+            </if>
+        </set>
+    </insert>
+    <update id="updateclassname">
+        update t_class
+        <set>
+            <if test="classname != null and classname !=''">
+                class_name = #{classname}
+            </if>
+        </set>
+        <where>
+            <if test="classId !=null ">
+                and class_id = #{classId}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delclass">
+        DELETE FROM t_class
+        <where>
+            <if test="classId != null ">
+                and class_id = #{classId}
+            </if>
+        </where>
+    </delete>
 
     <select id="queryall" resultType="com.cyb.pojo.Class">
         select * from t_class
@@ -14,6 +44,39 @@
             </if>
         </where>
          and t1.class_id  = t2.class_id
-
     </select>
+
+    <select id="getclasslist" resultType="com.cyb.pojo.Class">
+        select a.class_id,a.class_name,COUNT(b.stu_id) as studentnum
+        from t_class a left join t_student b on a.class_id=b.stu_classid
+        <where>
+            <if test="classname != null and classname !=''">
+                and a.class_name like CONCAT(CONCAT('%',#{classname}),'%')
+            </if>
+        </where>
+        GROUP BY a.class_id
+    </select>
+
+    <select id="getclassnum" resultType="java.lang.Integer">
+        select count(class_id) from t_class
+        <where>
+            <if test="classname != null and classname !=''">
+                and class_name like CONCAT(CONCAT('%',#{classname}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryone" resultType="java.lang.Integer">
+        select count(*) from  t_class
+        <where>
+            <if test="classname != null and classname!= ''">
+                and class_name like #{classname}
+            </if>
+        </where>
+    </select>
+
+    <select id="getallclass" resultType="com.cyb.pojo.Class">
+        select * from t_class order by class_id
+    </select>
+
 </mapper>

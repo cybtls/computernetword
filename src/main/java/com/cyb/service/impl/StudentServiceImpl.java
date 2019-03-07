@@ -7,6 +7,8 @@ import com.cyb.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
 
@@ -37,5 +39,29 @@ public class StudentServiceImpl implements StudentService {
         Integer flag = studentMapper.delstudent(stuid);
         return  flag;
     }
+
+    @Override
+    public Integer queryone(Integer classId) {
+        Integer flag = studentMapper.queryone(classId);
+        return  flag;
+    }
+
+    @Override
+    public List<Student> getallstudent() {
+        List<Student> students = studentMapper.getallstudent();
+        return students;
+    }
+
+    @Override
+    public Integer getallstudentnum() {
+        Integer count = studentMapper.getallstudentnum();
+        return count;
+    }
+
+    @Override
+    public List<Student> getstudentbyclassid(Integer classid) {
+        return null;
+    }
+
 
 }

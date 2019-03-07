@@ -13,6 +13,8 @@ public class Class {
 
     private List<Student> students;
 
+    private Integer studentnum;
+
     public Integer getClassId() {
         return classId;
     }
@@ -35,5 +37,13 @@ public class Class {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public Integer getStudentnum() {
+        return studentnum;
+    }
+
+    public void setStudentnum(Integer studentnum) {
+        this.studentnum = studentnum;
     }
 }

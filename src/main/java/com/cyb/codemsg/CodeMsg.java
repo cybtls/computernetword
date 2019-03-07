@@ -16,10 +16,10 @@ public class CodeMsg {
 
 
     /**
-     *  账号存在 登录成功
+     *  存在
      */
     public static Integer Code_EXIST = 201;
-    public static String Code_EXIST_MSG = "账号存在 登录成功";
+    public static String Code_EXIST_MSG = "存在";
 
     /**
      * 账号状态为封禁

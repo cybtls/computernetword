@@ -24,4 +24,39 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> getclassinfobyteacherId(Integer teacherId) {
         return classMapper.getclassinfobyteacherId(teacherId);
     }
+
+    @Override
+    public List<Class> getclasslist(String classname) {
+        return classMapper.getclasslist(classname);
+    }
+
+    @Override
+    public Integer getclassnum(String classname) {
+        return classMapper.getclassnum(classname);
+    }
+
+    @Override
+    public Integer updateclassname(Integer classId, String classname) {
+        return classMapper.updateclassname(classId,classname);
+    }
+
+    @Override
+    public Integer queryone(String classname) {
+        return classMapper.queryone(classname);
+    }
+
+    @Override
+    public Integer delclass(Integer classId) {
+        return classMapper.delclass(classId);
+    }
+
+    @Override
+    public Integer addclass(String classname) {
+        return classMapper.addclass(classname);
+    }
+
+    @Override
+    public List<Class> getallclass() {
+        return classMapper.getallclass();
+    }
 }

@@ -108,7 +108,7 @@ public class TeacherController {
         return back;
     }
 
-//    通过班级id查询班级
+//    通过班级id查询班级学生
     @ResponseBody
     @RequestMapping("/getmyclassbyid")
     public Map<String,Object> getmyclassbyid(@RequestBody Map map){
@@ -129,7 +129,7 @@ public class TeacherController {
         return back;
     }
 
-//    通过班级名查询班级
+//    通过班级名查询班级学生
     @ResponseBody
     @RequestMapping("/getmyclassbyname")
     public Map<String,Object> getmyclassbyname(@RequestBody Map map){

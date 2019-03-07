@@ -33,6 +33,27 @@
         and t1.stu_classid = t2.class_id
     </select>
 
+    <!--删除前的检查-->
+    <select id="queryone" resultType="java.lang.Integer">
+        select count(stu_id) from t_student
+        <where>
+            <if test="classId != null ">
+                and stu_classid = #{classId}
+            </if>
+        </where>
+    </select>
+
+    <!--获取所有学生信息-->
+    <select id="getallstudent" resultMap="stu">
+        SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
+        from t_student t1,t_class t2
+		where t1.stu_classid = t2.class_id
+    </select>
+
+    <select id="getallstudentnum" resultType="java.lang.Integer">
+        select count(stu_id) from t_student;
+    </select>
+
     <!--学生更新个人信息-->
     <update id="updatemyinfo" parameterType="com.cyb.pojo.Student">
         UPDATE t_student

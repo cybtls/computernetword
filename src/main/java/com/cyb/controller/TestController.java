@@ -1,6 +1,8 @@
 package com.cyb.controller;
 
+import com.cyb.pojo.Student;
 import com.cyb.pojo.Test;
+import com.cyb.service.StudentService;
 import com.cyb.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class TestController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private StudentService studentService;
 
     @ResponseBody
     @RequestMapping("/yy")
@@ -33,4 +37,7 @@ public class TestController {
         List<Test> test = testService.add();
         return "1";
     }
+
+
+
 }
