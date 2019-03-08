@@ -18,4 +18,16 @@ public interface TeacherService {
     Integer getcountbyid(Integer classid);
 
     Integer getcountbyname(Integer teacherid, String classname);
+
+    List<Teacher> getteacher(String teachername);
+
+    Integer getteachernum(String teachername);
+
+    Integer changeteacherstatus(Integer teacherId, Integer teacherStatus);
+
+    Integer addteacher(Teacher teacher);
+
+    Integer queryone(String teacherAccount);
+
+    List<Teacher> getteacherlist();
 }

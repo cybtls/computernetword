@@ -159,7 +159,6 @@ public class TeacherController {
     public  Map<String,Object> chagestatus(@RequestBody Map map){
         Integer stuid = (Integer) map.get("stuid");
         Integer status = (Integer) map.get("status");
-//        System.out.println(stuid+"------------"+status);
         Integer flag  = studentService.updatestatus(stuid,status);
         if (flag != 0){
             code = CodeMsg.Code_SUCCESS;
@@ -172,18 +171,20 @@ public class TeacherController {
     }
 
 //    删除学生
-    @ResponseBody
-    @RequestMapping("/delstudent")
-    public  Map<String,Object> delstudent(@RequestBody Map map){
-        Integer stuid = (Integer) map.get("stuid");
-        Integer flag  = studentService.delstudent(stuid);
-        if (flag != 0){
-            code = CodeMsg.Code_SUCCESS;
-        }else {
-            code = CodeMsg.Code_ERROR;
-        }
-        Map<String,Object> back = new HashMap<>();
-        back.put("code",code);
-        return back;
-    }
+//    @ResponseBody
+//    @RequestMapping("/delstudent")
+//    public  Map<String,Object> delstudent(@RequestBody Map map){
+//        Integer stuid = (Integer) map.get("stuid");
+//        Integer flag  = studentService.delstudent(stuid);
+//        if (flag != 0){
+//            code = CodeMsg.Code_SUCCESS;
+//        }else {
+//            code = CodeMsg.Code_ERROR;
+//        }
+//        Map<String,Object> back = new HashMap<>();
+//        back.put("code",code);
+//        return back;
+//    }
+
+
 }

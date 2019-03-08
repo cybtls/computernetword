@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.TeachertoClassMapper">
+    <resultMap id="ttc" type="com.cyb.pojo.TeachertoClass">
+        <id property="ttcId" column="ttc_id"></id>
+        <association property="teacher" javaType="com.cyb.pojo.Teacher">
+            <id property="teacherId" column="teacher_id"></id>
+            <result property="teacherName" column="teacher_name"></result>
+        </association>
+        <association property="aClass" javaType="com.cyb.pojo.Class">
+            <id property="classId" column="class_id"></id>
+            <result property="className" column="class_name"></result>
+        </association>
+    </resultMap>
+
+    <insert id="addttc">
+        insert into t_teachertoclass
+        <set>
+            <if test="teacherid != null ">
+                teacher_id = #{teacherid},
+            </if>
+            <if test="classid != null ">
+                class_id = #{classid},
+            </if>
+        </set>
+    </insert>
+
+    <delete id="delttc">
+      delete from t_teachertoclass
+      <where>
+          <if test="ttcid != null ">
+              and ttc_id = #{ttcid}
+          </if>
+      </where>
+    </delete>
+
+
+    <select id="getall" resultMap="ttc">
+        SELECT t1.ttc_id,t2.teacher_id,t2.teacher_name,t3.class_id,t3.class_name
+        FROM t_teachertoclass t1,t_teacher t2,t_class t3
+        WHERE t1.teacher_id = t2.teacher_id
+        and t1.class_id = t3.class_id
+        order by t2.teacher_id
+    </select>
+
+    <select id="queryone" resultType="java.lang.Integer">
+        select count(ttc_id) from t_teachertoclass
+        <where>
+            <if test="classid != null">
+                and class_id = #{classid}
+            </if>
+            <if test="teacherid != null">
+                and teacher_id = #{teacherid}
+            </if>
+        </where>
+    </select>
+</mapper>

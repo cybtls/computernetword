@@ -1,7 +1,6 @@
 package com.cyb.service;
 
 import com.cyb.pojo.Student;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +21,16 @@ public interface StudentService {
     Integer getallstudentnum();
 
     List<Student> getstudentbyclassid(Integer classid);
+
+    Integer getstudentnumbyclassname(String classname);
+
+    List<Student> getstudentbyclassname(String classname);
+
+    Integer getstudentnumbystudentname(String studentname);
+
+    List<Student> getstudentbystudentname(String studentname);
+
+    Integer addstudent(Student student);
+
+    Integer getstudentnumbyclassid(Integer classId);
 }

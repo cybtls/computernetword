@@ -63,5 +63,41 @@ public class StudentServiceImpl implements StudentService {
         return null;
     }
 
+    @Override
+    public Integer getstudentnumbyclassname(String classname) {
+        Integer count = studentMapper.getstudentnumbyclassname(classname);
+        return count;
+    }
+
+    @Override
+    public List<Student> getstudentbyclassname(String classname) {
+        List<Student> students = studentMapper.getstudentbyclassname(classname);
+        return students;
+    }
+
+    @Override
+    public Integer getstudentnumbystudentname(String studentname) {
+        Integer count = studentMapper.getstudentnumbystudentname(studentname);
+        return count;
+    }
+
+    @Override
+    public List<Student> getstudentbystudentname(String studentname) {
+        List<Student> students = studentMapper.getstudentbystudentname(studentname);
+        return students;
+    }
+
+    @Override
+    public Integer addstudent(Student student) {
+        Integer flag = studentMapper.addstudent(student);
+        return flag;
+    }
+
+    @Override
+    public Integer getstudentnumbyclassid(Integer classId) {
+        Integer flag = studentMapper.getstudentnumbyclassid(classId);
+        return flag;
+    }
+
 
 }

@@ -13,6 +13,26 @@
         </association>
     </resultMap>
 
+    <!--<resultMap id="teacher" type="com.cyb.pojo.Teacher">-->
+        <!--<id property="teacherId" column="teacher_id"></id>-->
+        <!--<result property="teacherAccount" column="teacher_account"></result>-->
+        <!--<result property="teacherPassword" column="teacher_password"></result>-->
+        <!--<result property="teacherName" column="teacher_name"></result>-->
+        <!--<result property="teacherEmail" column="teacher_email"></result>-->
+        <!--<result property="teacherQuestion" column="teacher_question"></result>-->
+        <!--<result property="teacherAnswer" column="teacher_answer"></result>-->
+        <!--<result property="teacherStatus" column="teacher_status"></result>-->
+        <!--<result property="teacherCreatedate" column="teacher_createdate"></result>-->
+        <!--<collection property="classes" javaType="com.cyb.pojo.Class">-->
+            <!--<id property="classId" column="class_id"></id>-->
+            <!--<result property="className" column="class_name"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+
+    <insert id="addteacher" parameterType="com.cyb.pojo.Teacher">
+        INSERT INTO t_teacher (teacher_account,teacher_password,teacher_name,teacher_email,teacher_question,teacher_answer,teacher_status)
+        VALUES (#{teacherAccount},#{teacherPassword},#{teacherName},#{teacherEmail},#{teacherQuestion},#{teacherAnswer},0)
+    </insert>
 
     <!--更新个人信息-->
     <update id="updatemyinfo" parameterType="com.cyb.pojo.Teacher">
@@ -36,6 +56,20 @@
         </set>
         <where>
             <if test="teacherId !=null ">
+                and teacher_id = #{teacherId}
+            </if>
+        </where>
+    </update>
+
+    <update id="changeteacherstatus">
+        update t_teacher
+        <set>
+            <if test="teacherStatus != null ">
+                teacher_status = #{teacherStatus}
+            </if>
+        </set>
+        <where>
+            <if test="teacherId != null ">
                 and teacher_id = #{teacherId}
             </if>
         </where>
@@ -110,4 +144,33 @@
         and t_class.class_id = t_student.stu_classid
         and t_class.class_id = t_teachertoclass.class_id
     </select>
+
+    <select id="getteacher" resultType="com.cyb.pojo.Teacher">
+        select  * from  t_teacher
+        <where>
+            <if test="teachername != null and teachername != ''">
+                and teacher_name like  CONCAT(CONCAT('%',#{teachername}),'%')
+            </if>
+        </where>
+        order by teacher_id
+    </select>
+
+    <select id="getteachernum" resultType="java.lang.Integer">
+        select  count(teacher_id) from  t_teacher
+        <where>
+            <if test="teachername != null and teachername != ''">
+                and teacher_name like  CONCAT(CONCAT('%',#{teachername}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryone" resultType="java.lang.Integer">
+        select  count(teacher_account) from  t_teacher where teacher_account = #{teacherAccount}
+    </select>
+
+    <select id="getteacherlist" resultType="com.cyb.pojo.Teacher">
+      select  teacher_id,teacher_name from t_teacher
+    </select>
+
+
 </mapper>

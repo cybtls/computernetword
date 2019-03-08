@@ -78,5 +78,13 @@
     <select id="getallclass" resultType="com.cyb.pojo.Class">
         select * from t_class order by class_id
     </select>
+    <select id="getone" resultType="com.cyb.pojo.Class">
+        select * from t_class
+        <where>
+            <if test="classname != null and classname !=''">
+                and class_name = #{classname}
+            </if>
+        </where>
+    </select>
 
 </mapper>

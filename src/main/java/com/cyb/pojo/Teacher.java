@@ -28,6 +28,7 @@ public class Teacher {
 
     private String teacherCreatedate;
 
+
     public Integer getTeacherId() {
         return teacherId;
     }
@@ -99,4 +100,5 @@ public class Teacher {
     public void setTeacherCreatedate(String teacherCreatedate) {
         this.teacherCreatedate = teacherCreatedate;
     }
+
 }

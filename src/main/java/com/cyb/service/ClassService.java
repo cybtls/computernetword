@@ -22,4 +22,6 @@ public interface ClassService {
     Integer addclass(String classname);
 
     List<Class> getallclass();
+
+    Class getone(String classname);
 }

@@ -19,4 +19,16 @@ public interface StudentMapper {
     List<Student> getallstudent();
 
     Integer getallstudentnum();
+
+    Integer getstudentnumbyclassname(@Param("classname") String classname);
+
+    List<Student> getstudentbyclassname(@Param("classname") String classname);
+
+    Integer getstudentnumbystudentname(@Param("studentname") String studentname);
+
+    List<Student> getstudentbystudentname(@Param("studentname") String studentname);
+
+    Integer addstudent(Student student);
+
+    Integer getstudentnumbyclassid(@Param("classId") Integer classId);
 }

@@ -11,6 +11,10 @@ public class TeachertoClass {
 
     private Integer classID;
 
+    private Teacher teacher;
+
+    private Class aClass;
+
     public Integer getTtcId() {
         return ttcId;
     }
@@ -33,5 +37,21 @@ public class TeachertoClass {
 
     public void setClassID(Integer classID) {
         this.classID = classID;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Class getaClass() {
+        return aClass;
+    }
+
+    public void setaClass(Class aClass) {
+        this.aClass = aClass;
     }
 }

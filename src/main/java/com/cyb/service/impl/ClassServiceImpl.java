@@ -59,4 +59,9 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> getallclass() {
         return classMapper.getallclass();
     }
+
+    @Override
+    public Class getone(String classname) {
+        return classMapper.getone(classname);
+    }
 }

@@ -18,6 +18,11 @@
         </association>
     </resultMap>
 
+    <insert id="addstudent" parameterType="com.cyb.pojo.Student">
+        INSERT INTO t_student (stu_account,stu_password,stu_name,stu_classid,stu_question,stu_answer,stu_status)
+        VALUES (#{stuAccount},#{stuPassword},#{stuName},#{stuClass.classId},#{stuQuestion},#{stuAnswer},1)
+    </insert>
+
     <!--学生登录检查-->
     <select id="stulogin" resultMap="stu">
         SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
@@ -48,18 +53,83 @@
         SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
         from t_student t1,t_class t2
 		where t1.stu_classid = t2.class_id
+		order by t1.stu_id
     </select>
 
+    <!--获取所有学生数量-->
     <select id="getallstudentnum" resultType="java.lang.Integer">
         select count(stu_id) from t_student;
+    </select>
+
+    <!--按班级名获取学生的数量-->
+    <select id="getstudentnumbyclassname" resultType="java.lang.Integer">
+        select count(*) from  t_student t1,t_class t2
+        <where>
+            <if test="classname != null and classname != ''">
+                and t2.class_name like CONCAT(CONCAT ('%',#{classname},'%'))
+            </if>
+        </where>
+        and t2.class_id = t1.stu_classid
+    </select>
+
+    <!--按班级名获取学生信息-->
+    <select id="getstudentbyclassname" resultMap="stu">
+        SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
+        from t_student t1,t_class t2
+        <where>
+            <if test="classname != null and classname!=''">
+                and t2.class_name like  CONCAT(CONCAT ('%',#{classname},'%'))
+            </if>
+        </where>
+		and t1.stu_classid = t2.class_id
+        order by t2.class_id
+    </select>
+
+    <!--按学生名获取学生数量-->
+    <select id="getstudentnumbystudentname" resultType="java.lang.Integer">
+        select count(*) from  t_student t1,t_class t2
+        <where>
+            <if test="studentname != null and studentname != ''">
+                and t1.stu_name like CONCAT(CONCAT ('%',#{studentname},'%'))
+            </if>
+        </where>
+        and t2.class_id = t1.stu_classid
+    </select>
+
+    <!--按学生名获取学生信息-->
+    <select id="getstudentbystudentname" resultMap="stu">
+        SELECT t1.stu_id,t1.stu_account,t1.stu_password,t1.stu_name,t1.stu_classid,t1.stu_question,t1.stu_answer,t1.stu_status,t2.class_name,t1.stu_classid,t2.class_id
+        from t_student t1,t_class t2
+        <where>
+            <if test="studentname != null and studentname!=''">
+                and t1.stu_name like  CONCAT(CONCAT ('%',#{studentname},'%'))
+            </if>
+        </where>
+        and t1.stu_classid = t2.class_id
+        ORDER BY  t1.stu_account
+    </select>
+
+    <select id="getstudentnumbyclassid" resultType="java.lang.Integer">
+        select count(stu_id) from t_student
+        <where>
+            <if test="classId != null ">
+                and stu_classid = #{classId}
+            </if>
+        </where>
     </select>
 
     <!--学生更新个人信息-->
     <update id="updatemyinfo" parameterType="com.cyb.pojo.Student">
         UPDATE t_student
         <set>
+            <if test="stuName != null and stuName !=''">
+                stu_name = #{stuName},
+            </if>
             <if test="stuPassword != null and stuPassword !=''">
                 stu_password = #{stuPassword},
+            </if>
+            <if test="stuClass.classId != null ">
+                stu_classid = #{stuClass.classId},
             </if>
             <if test="stuQuestion != null and stuQuestion !=''">
                 stu_question = #{stuQuestion},

@@ -23,4 +23,6 @@ public interface ClassMapper {
     Integer addclass(@Param("classname") String classname);
 
     List<Class> getallclass();
+
+    Class getone(@Param("classname") String classname);
 }
