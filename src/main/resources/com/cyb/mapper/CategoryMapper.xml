@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.CategoryMapper">
+    <insert id="addcategory">
+        insert into t_category
+        <set>
+            <if test="categoryname != null and categoryname !=''">
+                category_name = #{categoryname},
+            </if>
+        </set>
+    </insert>
+
+    <delete id="delcategory">
+        delete from t_category
+        <where>
+            <if test="categoryid != null ">
+                and category_id = #{categoryid}
+            </if>
+        </where>
+    </delete>
+
+    <select id="getallcategory" resultType="com.cyb.pojo.Category">
+        select * from t_category
+        order by category_id
+    </select>
+
+    <select id="queryone" resultType="java.lang.Integer">
+        select count(category_id) from t_category
+        <where>
+            <if test="categoryname != null and categoryname !=''">
+                and category_name = #{categoryname}
+            </if>
+        </where>
+    </select>
+
 </mapper>

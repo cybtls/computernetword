@@ -39,7 +39,7 @@ public class TeacherController {
     //    设置每页数量
     private Integer pageSize = 10;
 
-    Integer code;
+    private Integer code;
 
 //    教师登录检查
     @ResponseBody

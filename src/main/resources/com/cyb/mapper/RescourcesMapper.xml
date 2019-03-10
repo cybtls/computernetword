@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.ResourcesMapper">
+
+    <resultMap id="res" type="com.cyb.pojo.Resources">
+        <id property="resId" column="res_id"></id>
+        <result property="resName" column="res_path"></result>
+        <result property="resDownnum" column="res_downnum"></result>
+        <result property="resLastuploader" column="res_lastuploader"></result>
+        <result property="resLastmodification" column="res_lastmodification"></result>
+        <association property="category" javaType="com.cyb.pojo.Category">
+            <id property="categoryId" column="category_id"></id>
+            <result property="categoryName" column="category_name"></result>
+        </association>
+    </resultMap>
+
+    <insert id="addresource" parameterType="com.cyb.pojo.Resources">
+        insert into t_resources
+        <set>
+            <if test="resName != null and resName !=''">
+                res_name = #{resName},
+            </if>
+            <if test="resCategoryid != null">
+                res_categoryid = #{resCategoryid},
+            </if>
+            <if test="resPath != null and resPath !=''">
+                res_path = #{resPath},
+            </if>
+        </set>
+    </insert>
+
+    <select id="getresources" resultMap="res">
+        SELECT t1.category_id,t1.category_name,t2.res_id,t2.res_downnum,t2.res_lastmodification,t2.res_lastuploader,t2.res_name FROM t_category t1,t_resources t2
+        <where>
+            <if test="categoryid != null ">
+               and t2.res_category = #{categoryid}
+            </if>
+            <if test="resourcename != null and resourcename != ''">
+                and t2.res_name like CONCAT(CONCAT('%',#{resourcename}),'%')
+            </if>
+        </where>
+        and t1.category_id = t2.res_categoryid
+    </select>
+
 </mapper>

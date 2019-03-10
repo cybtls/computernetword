@@ -22,6 +22,8 @@ public class Resources {
 
     private String resLastmodification;
 
+    private Category category;
+
     public Integer getResId() {
         return resId;
     }
@@ -76,5 +78,13 @@ public class Resources {
 
     public void setResLastmodification(String resLastmodification) {
         this.resLastmodification = resLastmodification;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -34,7 +34,6 @@
       </where>
     </delete>
 
-
     <select id="getall" resultMap="ttc">
         SELECT t1.ttc_id,t2.teacher_id,t2.teacher_name,t3.class_id,t3.class_name
         FROM t_teachertoclass t1,t_teacher t2,t_class t3

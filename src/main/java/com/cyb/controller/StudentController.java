@@ -30,7 +30,7 @@ public class StudentController {
     private ScoreService scoreService;
 
 //    状态码
-    Integer code;
+    private Integer code;
 
 //    设置每页数量
     private Integer pageSize = 11;
