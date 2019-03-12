@@ -4,7 +4,7 @@
 
     <resultMap id="res" type="com.cyb.pojo.Resources">
         <id property="resId" column="res_id"></id>
-        <result property="resName" column="res_path"></result>
+        <result property="resName" column="res_name"></result>
         <result property="resDownnum" column="res_downnum"></result>
         <result property="resLastuploader" column="res_lastuploader"></result>
         <result property="resLastmodification" column="res_lastmodification"></result>
@@ -33,13 +33,44 @@
         SELECT t1.category_id,t1.category_name,t2.res_id,t2.res_downnum,t2.res_lastmodification,t2.res_lastuploader,t2.res_name FROM t_category t1,t_resources t2
         <where>
             <if test="categoryid != null ">
-               and t2.res_category = #{categoryid}
+                and t2.res_categoryid = #{categoryid}
             </if>
             <if test="resourcename != null and resourcename != ''">
                 and t2.res_name like CONCAT(CONCAT('%',#{resourcename}),'%')
             </if>
+            and t1.category_id = t2.res_categoryid
         </where>
-        and t1.category_id = t2.res_categoryid
+        order by t2.res_id
     </select>
 
+    <select id="getresourcesnum" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_category t1,t_resources t2
+        <where>
+            <if test="categoryid != null ">
+                and t2.res_categoryid = #{categoryid}
+            </if>
+            <if test="resourcename != null and resourcename != ''">
+                and t2.res_name like CONCAT(CONCAT('%',#{resourcename}),'%')
+            </if>
+            and t1.category_id = t2.res_categoryid
+        </where>
+    </select>
+
+    <select id="getresourcebyid" resultType="com.cyb.pojo.Resources">
+        select * from t_resources
+        <where>
+            <if test="resid != null ">
+                and res_id = #{resid}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delresources">
+        delete from t_resources
+        <where>
+            <if test="resid != null ">
+                and res_id = #{resid}
+            </if>
+        </where>
+    </delete>
 </mapper>

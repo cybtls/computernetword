@@ -3,6 +3,7 @@ package com.cyb.controller;
 import com.cyb.codemsg.CodeMsg;
 import com.cyb.pojo.Resources;
 import com.cyb.service.ResourcesService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,20 +33,64 @@ public class ResourcesController {
 
     @ResponseBody
     @RequestMapping("/getresources")
-    public Map<String,Object> getresources(@RequestBody Map map){
+    public Map<String, Object> getresources(@RequestBody Map map) {
         Integer categoryid = (Integer) map.get("categoryid");
         String resourcename = (String) map.get("resourcename");
-        Map<String,Object> back = new HashMap<>();
-        List<Resources> resources = resourcesService.getresources(categoryid,resourcename);
-        if (resources == null){
-            code = CodeMsg.Code_NOTEXIST;
-        }else {
-            code = CodeMsg.Code_SUCCESS;
-            back.put("resources",resources);
+        Integer CurrentpageNum = (Integer) map.get("CurrentpageNum");
+        Map<String, Object> back = new HashMap<>();
+        Integer count = 0;
+        List<Resources> resources;
+        if (categoryid == null && resourcename != null) {
+            count = resourcesService.getresourcesnum(null, resourcename);
+            PageHelper.startPage(CurrentpageNum, pageSize);
+            resources = resourcesService.getresources(null, resourcename);
+        } else if (categoryid != null && resourcename == null) {
+            count = resourcesService.getresourcesnum(categoryid, null);
+            PageHelper.startPage(CurrentpageNum, pageSize);
+            resources = resourcesService.getresources(categoryid, null);
+        } else if (categoryid != null && resourcename != null) {
+            count = resourcesService.getresourcesnum(categoryid, resourcename);
+            PageHelper.startPage(CurrentpageNum, pageSize);
+            resources = resourcesService.getresources(categoryid, resourcename);
+        } else {
+            count = resourcesService.getresourcesnum(null, null);
+            PageHelper.startPage(CurrentpageNum, pageSize);
+            resources = resourcesService.getresources(null, null);
         }
-        back.put("code",code);
-        return  back;
+        if (count > 0) {
+            code = CodeMsg.Code_SUCCESS;
+            back.put("count", count);
+            back.put("resources", resources);
+        } else {
+            code = CodeMsg.Code_NOTEXIST;
+        }
+        back.put("code", code);
+        return back;
     }
+
+    @ResponseBody
+    @RequestMapping("/delresources")
+    public Map<String, Object> delresources(@RequestParam("resid") Integer resid) {
+        Resources resources = resourcesService.getresourcebyid(resid);
+        File delfile = new File(resources.getResPath());
+        delfile.delete();
+        if (delfile.exists()) {
+            code = CodeMsg.Code_ERROR;
+        } else {
+            Integer flag = resourcesService.delresources(resid);
+            if (flag > 0) {
+                code = CodeMsg.Code_SUCCESS;
+            } else {
+                code = CodeMsg.Code_ERROR;
+            }
+        }
+        Map<String, Object> back = new HashMap<>();
+        back.put("code", code);
+        return back;
+    }
+
+
+
 
     @ResponseBody
     @RequestMapping("/uploaddocument")
