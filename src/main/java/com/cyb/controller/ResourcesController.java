@@ -4,7 +4,12 @@ import com.cyb.codemsg.CodeMsg;
 import com.cyb.pojo.Resources;
 import com.cyb.service.ResourcesService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,8 +95,6 @@ public class ResourcesController {
     }
 
 
-
-
     @ResponseBody
     @RequestMapping("/uploaddocument")
     public Map<String,Object> testupload(@RequestParam("file") MultipartFile multipartFile, @RequestParam("filecategoryid") Integer filecategoryid,
@@ -100,11 +103,9 @@ public class ResourcesController {
         Resources resources = new Resources();
         resources.setResCategoryid(filecategoryid);
         resources.setResLastuploader(uploader);
-        resources.setResName(filename);
         String path = request.getSession().getServletContext().getRealPath("resources/data/document");
         File filePath = new File(path);
 //        System.out.println("文件保存路径：" + path);
-        resources.setResPath(path);
         if (!filePath.exists() && !filePath.isDirectory()) {
 //            System.out.println("目录不存在，创建目录：" + filePath);
             filePath.mkdirs();
@@ -121,6 +122,9 @@ public class ResourcesController {
         //设置文件新名字
 //        String fileName = System.currentTimeMillis() + "." + type;
         String fileName = filename + "." + type;
+        resources.setResName(filename+"."+type);
+        resources.setResPath(path+File.separator+filename+"."+type);
+
 //        System.out.println("文件新名称：" + fileName);
         //在指定路径创建一个文件
         File targetFile = new File(path, fileName);
@@ -140,6 +144,33 @@ public class ResourcesController {
         }
         back.put("code",code);
         return back;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/downresources")
+    public ResponseEntity<byte[]> downresources(@RequestBody Map map, HttpServletRequest request) throws Exception {
+        try {
+            //下载路径
+//            String path = request.getSession().getServletContext().getRealPath("resources/data/document");
+            Integer resid = (Integer) map.get("resid");
+            Resources resources = resourcesService.getresourcebyid(resid);
+//            System.out.println(path+File.separator+fileName);
+            String path = resources.getResPath();
+            File file = new File(path);
+            HttpHeaders headers = new HttpHeaders();
+            //解决文件名中文乱码问题
+            String downloadFileName = new String(resources.getResName().getBytes("UTF-8"), "iso-8859-1");
+            //告诉浏览器以"attachment"方式打开文件
+            headers.setContentDispositionFormData("attachment", downloadFileName);
+            //设置请求头的媒体格式类型为 application/octet-stream(二进制流数据)
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("文件下载出错...");
+            return null;
+        }
     }
 
 }
