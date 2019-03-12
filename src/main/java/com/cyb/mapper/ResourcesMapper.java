@@ -15,4 +15,6 @@ public interface ResourcesMapper {
     Resources getresourcebyid(@Param("resid") Integer resid);
 
     Integer delresources(@Param("resid") Integer resid);
+
+    Integer updatedownnum(@Param("resid") Integer resid);
 }

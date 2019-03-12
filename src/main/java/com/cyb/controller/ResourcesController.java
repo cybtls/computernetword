@@ -165,6 +165,7 @@ public class ResourcesController {
             headers.setContentDispositionFormData("attachment", downloadFileName);
             //设置请求头的媒体格式类型为 application/octet-stream(二进制流数据)
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            Integer flag =  resourcesService.updatedownnum(resid);
             return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,5 +173,6 @@ public class ResourcesController {
             return null;
         }
     }
+
 
 }

@@ -26,8 +26,21 @@
             <if test="resPath != null and resPath !=''">
                 res_path = #{resPath},
             </if>
+            <if test="resLastuploader != null and resLastuploader !=''">
+                res_lastuploader = #{resLastuploader},
+            </if>
         </set>
     </insert>
+
+    <update id="updatedownnum">
+        update t_resources
+        set res_downnum = res_downnum + 1
+        <where>
+            <if test="resid !=null ">
+                and res_id = #{resid}
+            </if>
+        </where>
+    </update>
 
     <select id="getresources" resultMap="res">
         SELECT t1.category_id,t1.category_name,t2.res_id,t2.res_downnum,t2.res_lastmodification,t2.res_lastuploader,t2.res_name FROM t_category t1,t_resources t2

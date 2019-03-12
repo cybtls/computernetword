@@ -9,6 +9,7 @@
             </if>
         </set>
     </insert>
+
     <update id="updateclassname">
         update t_class
         <set>

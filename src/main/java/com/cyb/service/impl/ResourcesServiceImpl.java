@@ -39,5 +39,10 @@ public class ResourcesServiceImpl implements ResourcesService {
         return resourcesMapper.delresources(resid);
     }
 
+    @Override
+    public Integer updatedownnum(Integer resid) {
+        return resourcesMapper.updatedownnum(resid);
+    }
+
 
 }
