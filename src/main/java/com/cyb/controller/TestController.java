@@ -1,7 +1,5 @@
 package com.cyb.controller;
 
-import com.cyb.pojo.Category;
-import com.cyb.pojo.Student;
 import com.cyb.pojo.Test;
 import com.cyb.service.StudentService;
 import com.cyb.service.TestService;
@@ -109,5 +107,41 @@ public class TestController {
     }
 
 
+    @ResponseBody
+    @RequestMapping("/pp")
+    public String player(HttpServletRequest request,@RequestParam("video")MultipartFile video){
+        String path = request.getSession().getServletContext().getRealPath("resources/data/video");
+        File filePath = new File(path);
+        System.out.println("文件保存路径：" + path);
+        if (!filePath.exists() && !filePath.isDirectory()) {
+            System.out.println("目录不存在，创建目录：" + filePath);
+            filePath.mkdirs();
+        }
+
+        //获取原始文件名称
+        String originalFileName = video.getOriginalFilename();
+        System.out.println("原始文件名称：" + originalFileName);
+
+        //获取文件类型，以最后一个`.`作为标识
+        String type = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+        System.out.println("文件类型：" + type);
+
+        //设置文件新名字
+        String fileName = System.currentTimeMillis() + "." + type;
+        System.out.println("文件新名称：" + fileName);
+        //在指定路径创建一个文件
+        File targetFile = new File(path, fileName);
+
+        //将文件保存到服务器指定位置
+        try {
+            video.transferTo(targetFile);
+            System.out.println(targetFile.getPath());
+            return "ok";
+        } catch (IOException e) {
+            System.out.println("保存文件错误...");
+            e.printStackTrace();
+        }
+        return "okok";
+    }
 
 }
