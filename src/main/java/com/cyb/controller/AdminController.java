@@ -39,7 +39,7 @@ public class AdminController {
 
     private Integer pageSize = 10;
 
-    Integer code;
+    private Integer code;
 
 //    管理员登录检查
     @ResponseBody

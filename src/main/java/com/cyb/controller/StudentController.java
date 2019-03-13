@@ -3,8 +3,10 @@ package com.cyb.controller;
 import com.cyb.codemsg.CodeMsg;
 import com.cyb.pojo.Score;
 import com.cyb.pojo.Student;
+import com.cyb.pojo.Teacher;
 import com.cyb.service.ScoreService;
 import com.cyb.service.StudentService;
+import com.cyb.service.TeacherService;
 import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class StudentController {
 
     @Autowired
     private ScoreService scoreService;
+
+    @Autowired
+    private TeacherService teacherService;
 
 //    状态码
     private Integer code;
@@ -129,4 +134,20 @@ public class StudentController {
         back.put("code",code);
         return back;
     }
+
+    @ResponseBody
+    @RequestMapping("/getteacherlist")
+    public Map<String,Object> getteacherlist(){
+        List<Teacher> teachers = teacherService.getteacherlist();
+        Map<String,Object> back = new HashMap<>();
+        if (teachers == null){
+            code = CodeMsg.Code_ERROR;
+        }else {
+            code = CodeMsg.Code_SUCCESS;
+            back.put("teachers",teachers);
+        }
+        back.put("code",code);
+        return back;
+    }
+
 }

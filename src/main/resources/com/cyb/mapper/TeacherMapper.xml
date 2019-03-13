@@ -172,5 +172,14 @@
       select  teacher_id,teacher_name from t_teacher
     </select>
 
+    <select id="getteachernamebyid" resultType="com.cyb.pojo.Teacher">
+        select * from t_teacher
+        <where>
+            <if test="teacherid != null ">
+                and teacher_id = #{teacherid}
+            </if>
+        </where>
+    </select>
+
 
 </mapper>

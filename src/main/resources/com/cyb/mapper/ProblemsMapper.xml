@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyb.mapper.ProblemsMapper">
+    <resultMap id="pro" type="com.cyb.pojo.Problems">
+        <id property="problemId" column="problem_id"></id>
+        <result property="problemTitle" column="problem_title"></result>
+        <result property="problemText" column="problem_text"></result>
+        <result property="problemCreatedate" column="problem_createdate"></result>
+        <result property="teacherId" column="teacher_id"></result>
+        <association property="answer" javaType="com.cyb.pojo.Answer">
+            <id property="answerId" column="answer_id"></id>
+            <result property="answerText" column="answer_text"></result>
+        </association>
+    </resultMap>
+
+    <insert id="addproblem" parameterType="com.cyb.pojo.Problems">
+      insert into t_problems
+      <set>
+          <if test="teacherId != null ">
+              teacher_id = #{teacherId},
+          </if>
+          <if test="stuId != null ">
+              stu_id = #{stuId},
+          </if>
+          <if test="problemTitle != null and problemText !='' ">
+              problem_title = #{problemTitle},
+          </if>
+          <if test="problemText != null and problemText !=''">
+              problem_text = #{problemText},
+          </if>
+      </set>
+    </insert>
+
+    <delete id="delproblem">
+        delete from t_problems
+        <where>
+            <if test="problemid != null ">
+                and problem_id = #{problemid}
+            </if>
+        </where>
+    </delete>
+
+    <select id="getmyproblems" resultMap="pro">
+    SELECT t1.problem_id,t1.problem_title,t1.problem_createdate,t1.teacher_id,t1.problem_text,
+			t2.answer_text,t2.answer_id
+    from t_problems t1 LEFT JOIN t_answer t2 ON t1.problem_id = t2.problem_id
+      <where>
+          <if test="stuid != null ">
+              and t1.stu_id = #{stuid}
+          </if>
+      </where>
+        order by t1.problem_createdate DESC
+    </select>
+
+    <select id="getproblemsnumbyteacherid" resultType="java.lang.Integer">
+        select count(*) from t_problems
+        <where>
+            <if test="teacherid != null ">
+                and teacher_id = #{teacherid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getmyproblemsbyteacherid" resultMap="pro">
+        SELECT t1.problem_id,t1.problem_title,t1.problem_createdate,t1.teacher_id,t1.problem_text,
+        t2.answer_text,t2.answer_id
+        from t_problems t1 LEFT JOIN t_answer t2 ON t1.problem_id = t2.problem_id
+        <where>
+            <if test="teacherid != null ">
+                and t1.teacher_id = #{teacherid}
+            </if>
+        </where>
+        order by t1.problem_createdate DESC
+    </select>
+
+</mapper>

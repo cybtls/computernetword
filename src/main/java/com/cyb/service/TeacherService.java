@@ -30,4 +30,6 @@ public interface TeacherService {
     Integer queryone(String teacherAccount);
 
     List<Teacher> getteacherlist();
+
+    Teacher getteachernamebyid(Integer teacherid);
 }

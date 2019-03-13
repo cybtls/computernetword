@@ -30,4 +30,6 @@ public interface TeacherMapper {
     Integer queryone(@Param("teacherAccount") String teacherAccount);
 
     List<Teacher> getteacherlist();
+
+    Teacher getteachernamebyid(@Param("teacherid") Integer teacherid);
 }

@@ -7,13 +7,17 @@ public class Problems {
 
     private Integer problemId;
 
+    private String problemTitle;
+
     private String problemText;
 
     private Integer teacherId;
 
     private Integer stuId;
 
-    private Timestamp problemCreatedate;
+    private Answer answer;
+
+    private String problemCreatedate;
 
     public Integer getProblemId() {
         return problemId;
@@ -47,11 +51,27 @@ public class Problems {
         this.stuId = stuId;
     }
 
-    public Timestamp getProblemCreatedate() {
+    public String getProblemTitle() {
+        return problemTitle;
+    }
+
+    public void setProblemTitle(String problemTitle) {
+        this.problemTitle = problemTitle;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
+
+    public String getProblemCreatedate() {
         return problemCreatedate;
     }
 
-    public void setProblemCreatedate(Timestamp problemCreatedate) {
+    public void setProblemCreatedate(String problemCreatedate) {
         this.problemCreatedate = problemCreatedate;
     }
 }

@@ -10,7 +10,9 @@ public class Answer {
 
     private String answerText;
 
-    private Timestamp answerCreatedate;
+    private String answerCreatedate;
+
+    private Problems problems;
 
     public Integer getAnswerId() {
         return answerId;
@@ -36,11 +38,19 @@ public class Answer {
         this.answerText = answerText;
     }
 
-    public Timestamp getAnswerCreatedate() {
+    public String getAnswerCreatedate() {
         return answerCreatedate;
     }
 
-    public void setAnswerCreatedate(Timestamp answerCreatedate) {
+    public void setAnswerCreatedate(String answerCreatedate) {
         this.answerCreatedate = answerCreatedate;
+    }
+
+    public Problems getProblems() {
+        return problems;
+    }
+
+    public void setProblems(Problems problems) {
+        this.problems = problems;
     }
 }

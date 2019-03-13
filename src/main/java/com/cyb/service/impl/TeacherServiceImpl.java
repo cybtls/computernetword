@@ -90,5 +90,11 @@ public class TeacherServiceImpl implements TeacherService {
         return teachers;
     }
 
+    @Override
+    public Teacher getteachernamebyid(Integer teacherid) {
+        Teacher teacher = teacherMapper.getteachernamebyid(teacherid);
+        return teacher;
+    }
+
 
 }
