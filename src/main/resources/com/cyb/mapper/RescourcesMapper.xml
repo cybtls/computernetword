@@ -53,7 +53,7 @@
             </if>
             and t1.category_id = t2.res_categoryid
         </where>
-        order by t2.res_id
+        order by t2.res_lastmodification desc
     </select>
 
     <select id="getresourcesnum" resultType="java.lang.Integer">

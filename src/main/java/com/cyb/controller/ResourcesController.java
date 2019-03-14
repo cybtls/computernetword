@@ -133,10 +133,13 @@ public class ResourcesController {
         Map<String,Object> back = new HashMap<>();
         //将文件保存到服务器指定位置
         try {
-            multipartFile.transferTo(targetFile);
             Integer flag = resourcesService.addresource(resources);
-            code = CodeMsg.Code_SUCCESS;
-            return back;
+            if (flag > 0){
+                multipartFile.transferTo(targetFile);
+                code = CodeMsg.Code_SUCCESS;
+            }else {
+                code = CodeMsg.Code_ERROR;
+            }
         } catch (IOException e) {
             System.out.println("保存文件错误...");
             e.printStackTrace();

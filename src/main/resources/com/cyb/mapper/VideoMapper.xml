@@ -1,5 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.VideoMapper">
+    <resultMap id="res" type="com.cyb.pojo.Video">
+        <id property="videoId" column="video_id"></id>
+        <result property="videoName" column="video_name"></result>
+        <result property="videoViewingtimes" column="video_viewingtimes"></result>
+        <result property="videoLastuploader" column="video_lastuploader"></result>
+        <result property="videoLastmodification" column="video_lastmodification"></result>
+        <association property="category" javaType="com.cyb.pojo.Category">
+            <id property="categoryId" column="category_id"></id>
+            <result property="categoryName" column="category_name"></result>
+        </association>
+    </resultMap>
+
+
+    <insert id="addvideo" parameterType="com.cyb.pojo.Video">
+      insert  into t_video
+        <set>
+            <if test="videoCategoryid != null ">
+              video_categoryid = #{videoCategoryid},
+            </if>
+            <if test="videoName != null and videoName != ''">
+                video_name = #{videoName},
+            </if>
+            <if test="videoLastuploader != null and videoLastuploader !=''">
+                video_lastuploader = #{videoLastuploader},
+            </if>
+            <if test="videoPath != null and videoPath !=''">
+                video_path = #{videoPath},
+            </if>
+        </set>
+    </insert>
+
+    <delete id="delvideo">
+        delete from t_video
+        <where>
+            <if test="videoid != null ">
+                and video_id = #{videoid}
+            </if>
+        </where>
+    </delete>
+
+    <select id="getvideonum" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_category t1,t_video t2
+        <where>
+            <if test="categoryid != null ">
+                and t2.video_categoryid = #{categoryid}
+            </if>
+            <if test="videoname != null">
+                and t2.video_name like CONCAT(CONCAT('%',#{videoname}),'%')
+            </if>
+            and t1.category_id = t2.video_categoryid
+        </where>
+    </select>
+
+    <select id="getvideo" resultMap="res">
+        SELECT t1.category_id,t1.category_name,t2.video_id,t2.video_viewingtimes,t2.video_lastmodification,t2.video_lastuploader,t2.video_name FROM t_category t1,t_video t2
+        <where>
+            <if test="categoryid != null ">
+                and t2.video_categoryid = #{categoryid}
+            </if>
+            <if test="videoname != null and videoname != ''">
+                and t2.video_name like CONCAT(CONCAT('%',#{videoname}),'%')
+            </if>
+            and t1.category_id = t2.video_categoryid
+        </where>
+        order by t2.video_lastmodification desc
+    </select>
+
+    <select id="getvideobyname" resultType="java.lang.Integer">
+        select count(*) from t_video
+        <where>
+            <if test="videoname != null and videoname !=''">
+                and video_name = #{videoname}
+            </if>
+        </where>
+    </select>
 
 </mapper>
