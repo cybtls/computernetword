@@ -14,4 +14,6 @@ public interface VideoService {
     Integer getvideobyname(String videoname);
 
     Integer delvideo(Integer videoid);
+
+    Integer addviewingtimes(Integer videoid);
 }

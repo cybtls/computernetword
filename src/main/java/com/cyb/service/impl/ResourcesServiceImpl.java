@@ -44,5 +44,10 @@ public class ResourcesServiceImpl implements ResourcesService {
         return resourcesMapper.updatedownnum(resid);
     }
 
+    @Override
+    public Integer getresourcesbyname(String resourcesname) {
+        return resourcesMapper.getresourcesbyname(resourcesname);
+    }
+
 
 }

@@ -85,6 +85,21 @@ public class VideoController {
     }
 
     @ResponseBody
+    @RequestMapping("/addviewingtimes")
+    public Map<String,Object> addviewingtimes(@RequestParam("videoid")Integer videoid){
+        Map<String,Object> back = new HashMap<>();
+        Integer flag = videoService.addviewingtimes(videoid);
+        if (flag > 0){
+            code = CodeMsg.Code_SUCCESS;
+        }else {
+            code = CodeMsg.Code_ERROR;
+        }
+        back.put("code",code);
+        return back;
+
+    }
+
+    @ResponseBody
     @RequestMapping("/uploadvideo")
     public Map<String,Object> testupload(@RequestParam("file") MultipartFile multipartFile, @RequestParam("filecategoryid") Integer filecategoryid,
                                          @RequestParam("filename") String filename, @RequestParam("uploader")String uploader,

@@ -7,6 +7,7 @@
         <result property="videoViewingtimes" column="video_viewingtimes"></result>
         <result property="videoLastuploader" column="video_lastuploader"></result>
         <result property="videoLastmodification" column="video_lastmodification"></result>
+        <result property="videoPath" column="video_path"></result>
         <association property="category" javaType="com.cyb.pojo.Category">
             <id property="categoryId" column="category_id"></id>
             <result property="categoryName" column="category_name"></result>
@@ -32,6 +33,15 @@
         </set>
     </insert>
 
+    <update id="addviewingtimes">
+        update t_video set video_viewingtimes = video_viewingtimes + 1
+        <where>
+            <if test="videoid != null ">
+                and video_id = #{videoid}
+            </if>
+        </where>
+    </update>
+
     <delete id="delvideo">
         delete from t_video
         <where>
@@ -55,7 +65,8 @@
     </select>
 
     <select id="getvideo" resultMap="res">
-        SELECT t1.category_id,t1.category_name,t2.video_id,t2.video_viewingtimes,t2.video_lastmodification,t2.video_lastuploader,t2.video_name FROM t_category t1,t_video t2
+        SELECT t1.category_id,t1.category_name,t2.video_id,t2.video_viewingtimes,t2.video_lastmodification,t2.video_lastuploader,t2.video_name,t2.video_path
+        FROM t_category t1,t_video t2
         <where>
             <if test="categoryid != null ">
                 and t2.video_categoryid = #{categoryid}

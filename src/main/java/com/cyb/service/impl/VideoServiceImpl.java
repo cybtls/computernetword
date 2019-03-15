@@ -38,4 +38,9 @@ public class VideoServiceImpl implements VideoService {
     public Integer delvideo(Integer videoid) {
         return videoMapper.delvideo(videoid);
     }
+
+    @Override
+    public Integer addviewingtimes(Integer videoid) {
+        return videoMapper.addviewingtimes(videoid);
+    }
 }

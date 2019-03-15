@@ -78,6 +78,15 @@
         </where>
     </select>
 
+    <select id="getresourcesbyname" resultType="java.lang.Integer">
+        select count(*) from t_resources
+        <where>
+            <if test="resourcesname != null and resourcesname !=''">
+                and res_name = #{resourcesname}
+            </if>
+        </where>
+    </select>
+
     <delete id="delresources">
         delete from t_resources
         <where>

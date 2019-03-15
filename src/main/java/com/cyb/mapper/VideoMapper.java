@@ -15,4 +15,6 @@ public interface VideoMapper {
     Integer getvideobyname(@Param("videoname") String videoname);
 
     Integer delvideo(@Param("videoid") Integer videoid);
+
+    Integer addviewingtimes(@Param("videoid") Integer videoid);
 }

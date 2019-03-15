@@ -74,6 +74,20 @@ public class ResourcesController {
     }
 
     @ResponseBody
+    @RequestMapping("/getresourcesbyname")
+    public Map<String,Object> getresourcesbyname(@RequestParam("resourcesname")String resourcesname){
+        Integer flag = resourcesService.getresourcesbyname(resourcesname);
+        Map<String,Object> back = new HashMap<>();
+        if (flag > 0){
+            code = CodeMsg.Code_EXIST;
+        }else {
+            code = CodeMsg.Code_SUCCESS;
+        }
+        back.put("code",code);
+        return back;
+    }
+
+    @ResponseBody
     @RequestMapping("/delresources")
     public Map<String, Object> delresources(@RequestParam("resid") Integer resid) {
         Resources resources = resourcesService.getresourcebyid(resid);

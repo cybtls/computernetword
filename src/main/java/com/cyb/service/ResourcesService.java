@@ -16,4 +16,6 @@ public interface ResourcesService {
     Integer delresources(Integer resid);
 
     Integer updatedownnum(Integer resid);
+
+    Integer getresourcesbyname(String resourcesname);
 }
