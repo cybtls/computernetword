@@ -11,4 +11,10 @@ public interface ScoreMapper {
     Integer getcount(@Param("stuId") Integer stuId, @Param("coursename") String coursename);
 
     List<Score> getmyscorebyname(@Param("stuId") Integer stuId, @Param("coursename") String coursename);
+
+    List<Score> getstuscore(@Param("stuid") Integer stuid);
+
+    Integer queryscore(@Param("stuid") Integer stuid, @Param("courseid") Integer courseid);
+
+    Integer addscore(@Param("stuid") Integer stuid, @Param("courseid") Integer courseid, @Param("score") Integer score);
 }

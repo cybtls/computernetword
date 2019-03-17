@@ -10,4 +10,10 @@ public interface ScoreService {
     Integer getcount(Integer stuId,String coursename);
 
     List<Score> getmyscorebyname(Integer stuId, String coursename);
+
+    List<Score> getstuscore(Integer stuid);
+
+    Integer queryscore(Integer stuid, Integer courseid);
+
+    Integer addscore(Integer stuid, Integer courseid, Integer score);
 }

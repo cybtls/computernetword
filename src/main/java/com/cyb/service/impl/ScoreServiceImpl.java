@@ -30,4 +30,19 @@ public class ScoreServiceImpl implements ScoreService {
     public List<Score> getmyscorebyname(Integer stuId, String coursename) {
         return scoreMapper.getmyscorebyname(stuId,coursename);
     }
+
+    @Override
+    public List<Score> getstuscore(Integer stuid) {
+        return scoreMapper.getstuscore(stuid);
+    }
+
+    @Override
+    public Integer queryscore(Integer stuid, Integer courseid) {
+        return scoreMapper.queryscore(stuid,courseid);
+    }
+
+    @Override
+    public Integer addscore(Integer stuid, Integer courseid, Integer score) {
+        return scoreMapper.addscore(stuid,courseid,score);
+    }
 }

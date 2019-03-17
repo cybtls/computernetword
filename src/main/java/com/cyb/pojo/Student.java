@@ -1,5 +1,7 @@
 package com.cyb.pojo;
 
+import java.util.List;
+
 /**
  * 学生表
  */
@@ -22,8 +24,7 @@ public class Student {
     private Integer stuStatus;
 
     private Class stuClass;
-
-
+    
     public Integer getStuId() {
         return stuId;
     }
@@ -95,4 +96,5 @@ public class Student {
     public void setStuClass(Class stuClass) {
         this.stuClass = stuClass;
     }
+
 }

@@ -12,13 +12,29 @@
             </association>
         </association>
         <association property="course" javaType="com.cyb.pojo.Course">
+            <id property="courseId" column="course_id"></id>
             <result property="courseName" column="course_name"></result>
         </association>
     </resultMap>
 
+    <insert id="addscore">
+        insert into t_score
+        <set>
+            <if test="stuid != null ">
+                stu_id = #{stuid},
+            </if>
+            <if test="courseid != null ">
+                course_id = #{courseid},
+            </if>
+            <if test="score != null ">
+                course_score = #{score},
+            </if>
+        </set>
+    </insert>
+
     <!--查询成绩-->
     <select id="getmyscore" resultMap="score">
-        SELECT class.class_name,course.course_name,stu.stu_id,stu.stu_name,score.course_score
+        SELECT class.class_name,course.course_name,course.course_id,stu.stu_id,stu.stu_name,score.course_score
         from t_class class ,t_score score,t_student stu,t_course course
         where  class.class_id = stu.stu_classid
         and course.course_id = score.course_id
@@ -55,5 +71,26 @@
         and  class.class_id = stu.stu_classid
         and course.course_id = score.course_id
         and score.stu_id = stu.stu_id
+    </select>
+
+    <select id="getstuscore" resultMap="score">
+        SELECT class.class_name,course.course_name,course.course_id,stu.stu_id,stu.stu_name,score.course_score
+        from t_class class ,t_score score,t_student stu,t_course course
+        where  class.class_id = stu.stu_classid
+        and course.course_id = score.course_id
+        and score.stu_id = stu.stu_id
+        and stu.stu_id = #{stuid}
+    </select>
+
+    <select id="queryscore" resultType="java.lang.Integer">
+        select count(*) from t_score
+        <where>
+            <if test="stuid !=null ">
+                and stu_id = #{stuid}
+            </if>
+            <if test="courseid !=null ">
+                and course_id = #{courseid}
+            </if>
+        </where>
     </select>
 </mapper>
