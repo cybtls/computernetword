@@ -1,5 +1,3 @@
-# computernetword
-后台代码
 #### 后端状态码
 
 ```java
@@ -252,6 +250,7 @@ private Integer pageSize = 10;
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
     </dependency>
+
 ```
 
 ###### 配置文件spring-servlet.xml
@@ -267,6 +266,7 @@ private Integer pageSize = 10;
         <!--单个文件最大上传大小-->
         <property name="maxUploadSizePerFile" value="20000000000"/>
     </bean>
+
 ```
 
 ##### 上传（后端接收前端的文件）
@@ -324,6 +324,7 @@ private Integer pageSize = 10;
         back.put("code",code);
         return back;
     }
+
 ```
 
 ##### 下载（将数据返回给前端解析，告诉前端去下载）
@@ -355,5 +356,124 @@ private Integer pageSize = 10;
             return null;
         }
     }
+
 ```
+
+##### 删除
+
+```java
+    @ResponseBody
+    @RequestMapping("/delresources")
+    public Map<String, Object> delresources(@RequestParam("resid") Integer resid) {
+        Resources resources = resourcesService.getresourcebyid(resid);
+        File delfile = new File(resources.getResPath());
+        delfile.delete();
+        if (delfile.exists()) {
+            code = CodeMsg.Code_ERROR;
+        } else {
+            Integer flag = resourcesService.delresources(resid);
+            if (flag > 0) {
+                code = CodeMsg.Code_SUCCESS;
+            } else {
+                code = CodeMsg.Code_ERROR;
+            }
+        }
+        Map<String, Object> back = new HashMap<>();
+        back.put("code", code);
+        return back;
+    }
+
+```
+
+
+
+#### 视频文件的处理
+
+因为前端播放的时候需要的是项目跑起来的端口路径，所以保存的方法和普通文件不太一样
+
+```java
+ @ResponseBody
+    @RequestMapping("/uploadvideo")
+    public Map<String,Object> testupload(@RequestParam("file") MultipartFile multipartFile, @RequestParam("filecategoryid") Integer filecategoryid,
+                                         @RequestParam("filename") String filename, @RequestParam("uploader")String uploader,
+                                         HttpServletRequest request) {
+        Video video = new Video();
+        String path = request.getSession().getServletContext().getRealPath("resources/data/video");
+        File filePath = new File(path);
+        if (!filePath.exists() && !filePath.isDirectory()) {
+            filePath.mkdirs();
+        }
+
+        //获取原始文件名称
+        String originalFileName = multipartFile.getOriginalFilename();
+//        System.out.println("原始文件名称：" + originalFileName);
+
+        //获取文件类型，以最后一个`.`作为标识
+        String type = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+
+        //设置文件新名字
+        String fileName = filename + "." + type;
+
+//        System.out.println("文件新名称：" + fileName);
+//      在指定路径创建一个文件
+        File targetFile = new File(path, fileName);
+
+        //获取服务器资源路径,因为前端需要的是http://localhost:8080/
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+                request.getServerPort()+"/resources/data/video/"+filename+"."+type;
+//        System.out.println(basePath);
+
+
+        Map<String,Object> back = new HashMap<>();
+        video.setVideoCategoryid(filecategoryid);
+        video.setVideoName(fileName);
+        video.setVideoPath(basePath);
+        video.setVideoLastuploader(uploader);
+        //将文件保存到服务器指定位置
+        try {
+            Integer flag = videoService.addvideo(video);
+            if (flag > 0){
+                multipartFile.transferTo(targetFile);
+                code = CodeMsg.Code_SUCCESS;
+            }else {
+                code = CodeMsg.Code_ERROR;
+            }
+        } catch (IOException e) {
+            System.out.println("保存文件错误...");
+            e.printStackTrace();
+            code = CodeMsg.Code_ERROR;
+        }
+        back.put("code",code);
+        return back;
+    }
+
+```
+
+删除也有些小差异
+
+```java
+    @ResponseBody
+    @RequestMapping("/delvideo")
+    public Map<String,Object> delvideo(@RequestParam("videoId")Integer videoid,@RequestParam("videoName")String videoName,HttpServletRequest request){
+        Map<String,Object> back = new HashMap<>();
+        String path = request.getSession().getServletContext().getRealPath("resources/data/video");
+        File delfile = new File(path+"\\"+videoName);
+        delfile.delete();
+        if (delfile.exists()){
+            code = CodeMsg.Code_ERROR;
+        }else {
+            Integer flag = videoService.delvideo(videoid);
+            if (flag > 0) {
+                code = CodeMsg.Code_SUCCESS;
+            } else {
+                code = CodeMsg.Code_ERROR;
+            }
+        }
+        back.put("code",code);
+        return back;
+    }
+
+```
+
+
 
