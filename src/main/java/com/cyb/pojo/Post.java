@@ -20,6 +20,8 @@ public class Post {
 
     private Integer postStatus;
 
+    private Integer postFire;
+
     private List<Comment> commentList;
 
     public Integer getPostId() {
@@ -92,5 +94,14 @@ public class Post {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+
+    public Integer getPostFire() {
+        return postFire;
+    }
+
+    public void setPostFire(Integer postFire) {
+        this.postFire = postFire;
     }
 }

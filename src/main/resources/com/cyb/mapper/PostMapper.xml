@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.PostMapper">
 
+    <select id="getpostnum" resultType="java.lang.Integer">
+        select count(*) from t_post
+        <where>
+            <if test="posttitleorauthor != null and posttitleorauthor !=''">
+                and post_title like CONCAT(CONCAT('%',#{posttitleorauthor}),'%') or post_presentername like CONCAT(CONCAT('%',#{posttitleorauthor}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getpost" resultType="com.cyb.pojo.Post">
+        select * from t_post
+        <where>
+            <if test="posttitleorauthor != null and posttitleorauthor !=''">
+                and post_title like CONCAT(CONCAT('%',#{posttitleorauthor}),'%') or post_presentername like CONCAT(CONCAT('%',#{posttitleorauthor}),'%')
+            </if>
+        </where>
+    </select>
 </mapper>
