@@ -9,4 +9,6 @@ public interface PostMapper {
     Integer getpostnum(@Param("posttitleorauthor") String posttitleorauthor);
 
     List<Post> getpost(@Param("posttitleorauthor") String posttitleorauthor);
+
+    Integer addpostfire(@Param("postid") Integer postid);
 }

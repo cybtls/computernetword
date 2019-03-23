@@ -23,4 +23,9 @@ public class PostServiceImpl implements PostService {
     public List<Post> getpost(String posttitleorauthor) {
         return postMapper.getpost(posttitleorauthor);
     }
+
+    @Override
+    public Integer addpostfire(Integer postid) {
+        return postMapper.addpostfire(postid);
+    }
 }

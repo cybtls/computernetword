@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.CommentMapper">
+    <insert id="addcomment" parameterType="com.cyb.pojo.Comment">
+        insert into t_comment
+        <set>
+            <if test="commentPresenterid != null ">
+                comment_presenterid = #{commentPresenterid},
+            </if>
+            <if test="commentPresentername != null ">
+                comment_presentername = #{commentPresentername},
+            </if>
+            <if test="commentPresentertype != null ">
+                comment_presentertype = #{commentPresentertype},
+            </if>
+            <if test="postId != null ">
+                post_id = #{postId},
+            </if>
+            <if test="commentText != null ">
+                comment_text = #{commentText},
+            </if>
+        </set>
+    </insert>
 
+    <select id="getcommentnum" resultType="java.lang.Integer">
+        select count(*) from t_comment
+        <where>
+            <if test="postid != null ">
+                and post_id = #{postid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getcomment" resultType="com.cyb.pojo.Comment">
+        select * from t_comment
+        <where>
+            <if test="postid != null ">
+                and post_id = #{postid}
+            </if>
+        </where>
+        order by comment_time desc
+    </select>
 </mapper>

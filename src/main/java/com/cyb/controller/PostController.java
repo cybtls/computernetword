@@ -45,4 +45,14 @@ public class PostController {
         back.put("code",code);
         return back;
     }
+
+
+    @ResponseBody
+    @RequestMapping("/addpostfire")
+    public Map<String,Object> addpostfire(@RequestParam("postid")Integer postid){
+        Map<String,Object> back = new HashMap<>();
+        Integer flag = postService.addpostfire(postid);
+        return back;
+    }
+
 }

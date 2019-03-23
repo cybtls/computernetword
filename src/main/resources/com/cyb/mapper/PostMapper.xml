@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.PostMapper">
+    <update id="addpostfire">
+        update t_post set post_fire = post_fire+1
+        <where>
+            <if test="postid != null ">
+                and post_id = #{postid}
+            </if>
+        </where>
+    </update>
 
     <select id="getpostnum" resultType="java.lang.Integer">
         select count(*) from t_post
