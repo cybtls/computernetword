@@ -28,4 +28,10 @@ public class CommentServiceImpl implements CommentService {
     public Integer addcomment(Comment comment) {
         return commentMapper.addcomment(comment);
     }
+
+    @Override
+    public Integer delcomment(Integer commentid) {
+        return commentMapper.delcomment(commentid);
+    }
+
 }

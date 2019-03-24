@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cyb.mapper.PostMapper">
+    <insert id="addpost" parameterType="com.cyb.pojo.Post">
+        insert into t_post
+        <set>
+            <if test="postPresenterid != null ">
+                post_presenterid = #{postPresenterid},
+            </if>
+            <if test="postPresentertype != null ">
+                post_presentertype = #{postPresentertype},
+            </if>
+            <if test="postPresentername != null ">
+                post_presentername = #{postPresentername},
+            </if>
+            <if test="postTitle != null and postTitle !=''">
+                post_title = #{postTitle},
+            </if>
+            <if test="postText != null and postText !='' ">
+                post_text = #{postText},
+            </if>
+        </set>
+    </insert>
+
     <update id="addpostfire">
         update t_post set post_fire = post_fire+1
         <where>
@@ -9,6 +30,15 @@
             </if>
         </where>
     </update>
+
+    <delete id="delpost">
+        delete from t_post
+        <where>
+            <if test="postid != null ">
+                and post_id = #{postid}
+            </if>
+        </where>
+    </delete>
 
     <select id="getpostnum" resultType="java.lang.Integer">
         select count(*) from t_post
@@ -26,5 +56,31 @@
                 and post_title like CONCAT(CONCAT('%',#{posttitleorauthor}),'%') or post_presentername like CONCAT(CONCAT('%',#{posttitleorauthor}),'%')
             </if>
         </where>
+        order by post_time desc
+    </select>
+
+    <select id="getmypostnum" resultType="_int">
+      select count(*) from t_post
+      <where>
+          <if test="id != null ">
+              and post_presenterid =#{id}
+          </if>
+          <if test="type != null ">
+              and post_presentertype =#{type}
+          </if>
+      </where>
+    </select>
+
+    <select id="getmypost" resultType="com.cyb.pojo.Post">
+        select * from t_post
+        <where>
+            <if test="id != null ">
+                and post_presenterid =#{id}
+            </if>
+            <if test="type != null ">
+                and post_presentertype =#{type}
+            </if>
+        </where>
+        order by post_time desc
     </select>
 </mapper>

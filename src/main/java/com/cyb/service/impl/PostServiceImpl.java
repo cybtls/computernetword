@@ -28,4 +28,24 @@ public class PostServiceImpl implements PostService {
     public Integer addpostfire(Integer postid) {
         return postMapper.addpostfire(postid);
     }
+
+    @Override
+    public Integer addpost(Post post) {
+        return postMapper.addpost(post);
+    }
+
+    @Override
+    public Integer delpost(Integer postid) {
+        return postMapper.delpost(postid);
+    }
+
+    @Override
+    public Integer getmypostnum(Integer id, Integer type) {
+        return postMapper.getmypostnum(id,type);
+    }
+
+    @Override
+    public List<Post> getmypost(Integer id, Integer type) {
+        return postMapper.getmypost(id,type);
+    }
 }

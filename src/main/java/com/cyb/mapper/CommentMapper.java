@@ -11,4 +11,6 @@ public interface CommentMapper {
     List<Comment> getcomment(@Param("postid") Integer postid);
 
     Integer addcomment(Comment comment);
+
+    Integer delcomment(@Param("commentid") Integer commentid);
 }

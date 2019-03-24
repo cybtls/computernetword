@@ -10,4 +10,12 @@ public interface PostService {
     List<Post> getpost(String posttitleorauthor);
 
     Integer addpostfire(Integer postid);
+
+    Integer addpost(Post post);
+
+    Integer delpost(Integer postid);
+
+    Integer getmypostnum(Integer id, Integer type);
+
+    List<Post> getmypost(Integer id, Integer type);
 }

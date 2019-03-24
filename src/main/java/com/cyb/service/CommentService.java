@@ -10,4 +10,6 @@ public interface CommentService {
     List<Comment> getcomment(Integer postid);
 
     Integer addcomment(Comment comment);
+
+    Integer delcomment(Integer commentid);
 }

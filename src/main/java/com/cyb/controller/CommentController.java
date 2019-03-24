@@ -27,7 +27,7 @@ public class CommentController {
     private Integer code;
 
     @ResponseBody
-    @RequestMapping("getcomment")
+    @RequestMapping("/getcomment")
     public Map<String,Object> getcomment(@RequestParam("commentCurrentpageNum")Integer commentcurrentpagenum,
                                          @RequestParam("postid")Integer postid){
         Map<String,Object> back = new HashMap<>();
@@ -51,7 +51,7 @@ public class CommentController {
 
 
     @ResponseBody
-    @RequestMapping("addcomment")
+    @RequestMapping("/addcomment")
     public Map<String,Object> addcomment(@RequestBody Map map){
         Map<String,Object> back = new HashMap<>();
         Comment comment = new Comment();
@@ -62,6 +62,22 @@ public class CommentController {
         comment.setCommentText((String) map.get("comment"));
         Integer flag = commentService.addcomment(comment);
         if (flag > 0){
+            code = CodeMsg.Code_SUCCESS;
+        }else {
+            code = CodeMsg.Code_ERROR;
+        }
+        back.put("code",code);
+        return back;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/delcomment")
+    public Map<String,Object> delcomment(@RequestBody Map map){
+        Map<String,Object> back = new HashMap<>();
+        Integer commentid = (Integer)map.get("commentid");
+        Integer flag = commentService.delcomment(commentid);
+        if(flag > 0){
             code = CodeMsg.Code_SUCCESS;
         }else {
             code = CodeMsg.Code_ERROR;

@@ -22,6 +22,15 @@
         </set>
     </insert>
 
+    <delete id="delcomment">
+        delete from t_comment
+        <where>
+            <if test="commentid != null ">
+                and comment_id = #{commentid}
+            </if>
+        </where>
+    </delete>
+
     <select id="getcommentnum" resultType="java.lang.Integer">
         select count(*) from t_comment
         <where>
